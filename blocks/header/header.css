@@ -1,0 +1,17 @@
+.header {
+  max-width: 1280px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+@media (min-width: 321px) {
+  .header {
+    padding: 45px 15.625% 40px;
+  }
+}
+
+@media (max-width: 320px) {
+  .header {
+    padding: 28px 0% 42px;
+  }
+}
