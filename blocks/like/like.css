@@ -1,0 +1,10 @@
+.like {
+  width: 22px;
+  height: 19px;
+  fill: black;
+}
+
+.like:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
