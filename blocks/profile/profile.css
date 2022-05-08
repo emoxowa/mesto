@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 15.625% 0;
+  gap: 3.41%;
 }
 
 @media (min-width: 1281px) {
@@ -14,7 +15,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .profile {
     padding: 0 5.94% 0;
     flex-direction: column;

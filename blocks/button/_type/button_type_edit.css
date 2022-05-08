@@ -1,6 +1,5 @@
 .button_type_edit {
-  height: 24px;
-  width: 24px;
+  padding: 6px;
   vertical-align:baseline;
 }
 
@@ -8,7 +7,7 @@
   opacity: 0.5;
 }
 
-@media (max-width: 930px) {
+@media (max-width: 320px) {
   .button_type_edit {
     height: 18px;
     width: 18px;

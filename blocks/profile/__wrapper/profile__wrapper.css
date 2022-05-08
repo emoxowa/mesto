@@ -6,10 +6,12 @@
 }
 
 
-@media (max-width: 930px) {
+@media (max-width: 767px) {
   .profile__wrapper {
     padding: 0 0% 0;
     flex-direction: column;
-    gap: 26px;
+    gap: 32px;
+    width: 100%;
+    justify-content: center;
   }
 }
