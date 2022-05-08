@@ -9,8 +9,7 @@
 
 @media (max-width: 768px) {
   .popup__title {
-    font-size: 18px;
+    font-size: 17px;
     line-height: 22px;
-    white-space: nowrap;
   }
 }
