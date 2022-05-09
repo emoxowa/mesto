@@ -1,9 +1,0 @@
-.like {
-  width: 22px;
-  height: 19px;
-}
-
-.like:hover {
-  opacity: 0.5;
-  cursor: pointer;
-}

@@ -1,4 +1,5 @@
 .profile__name {
+  max-width: 340px;
   margin: 0;
   font-style: normal;
   font-weight: 500;
@@ -7,7 +8,10 @@
   padding-right: 18px;
   word-wrap: break-all;
   letter-spacing:0.05ex;
-
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-bottom: 8px;
 }
 @media (min-width: 1281px) {
   .profile__name {

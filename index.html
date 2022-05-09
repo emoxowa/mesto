@@ -10,8 +10,7 @@
 <body>
   <div class="page">
     <header class="header">
-      <h1 class="header__title"><a href="#"><img src="images/Logo.svg" alt="Логотип" class="logo"></a></h1>
-      <div class="header__line"></div>
+    <a href="#"><img src="images/Logo.svg" alt="Логотип" class="logo"></a>
     </header>
     <main class="content">
       <section class="profile">
@@ -19,15 +18,15 @@
           <img src="images/Avatar.png" alt="аватар" class="profile__avatar">
           <div class="profile__info">
             <div class="profile__name-edit">
-              <h2 class="profile__name">Жак-Ив Кусто</h2>
-              <button class="button button_type_edit button_type_edit-open">
+              <h1 class="profile__name">Жак-Ив Кусто</h1>
+              <button type="button" class="button button_type_edit">
                 <img src="images/Pencil.svg" alt="карандаш">
               </button>
             </div>
             <p class="profile__job">Исследователь океана</p>
           </div>
         </div>
-        <button class="button button_type_add">
+        <button type="button" class="button button_type_add">
           <img src="images/Plus.svg" alt="плюс">
         </button>
       </section>
@@ -35,43 +34,43 @@
         <div class="card">
           <img src="images/image_1.png" alt="Карачаевск" class="card__image">
            <div class="card__body">
-            <h3 class="card__title">Карачаевск</h3>
-            <img src="images/like.svg" alt="лайк" class="like">
+            <h2 class="card__title">Карачаевск</h2>
+            <button type="button" class="card__button-like"><img src="images/like.svg" alt="лайк" class="like"></button>
           </div>
         </div>
         <div class="card">
           <img src="images/image_2.png" alt="Гора Эльбрус" class="card__image">
           <div class="card__body">
-            <h3 class="card__title">Гора Эльбрус</h3>
-            <img src="images/like.svg" alt="лайк" class="like">
+            <h2 class="card__title">Гора Эльбрус</h2>
+            <button type="button" class="card__button-like"><img src="images/like.svg" alt="лайк" class="like"></button>
           </div>
         </div>
         <div class="card">
           <img src="images/image_3.png" alt="Домбай" class="card__image">
           <div class="card__body">
-            <h3 class="card__title">Домбай</h3>
-            <img src="images/like.svg" alt="лайк" class="like">
+            <h2 class="card__title">Домбай</h2>
+            <button type="button" class="card__button-like"><img src="images/like.svg" alt="лайк" class="like"></button>
           </div>
         </div>
         <div class="card">
           <img src="images/image_2.png" alt="Гора Эльбрус" class="card__image">
           <div class="card__body">
-            <h3 class="card__title">Гора Эльбрус</h3>
-            <img src="images/like.svg" alt="лайк" class="like">
+            <h2 class="card__title">Гора Эльбрус</h2>
+            <button type="button" class="card__button-like"><img src="images/like.svg" alt="лайк" class="like"></button>
           </div>
         </div>
         <div class="card">
           <img src="images/image_3.png" alt="Домбай" class="card__image">
           <div class="card__body">
-            <h3 class="card__title">Домбай</h3>
-            <img src="images/like.svg" alt="лайк" class="like">
+            <h2 class="card__title">Домбай</h2>
+            <button type="button" class="card__button-like"><img src="images/like.svg" alt="лайк" class="like"></button>
           </div>
         </div>
         <div class="card">
           <img src="images/image_1.png" alt="Карачаево-Черкессия" class="card__image">
           <div class="card__body">
-            <h3 class="card__title">Карачаево-Черкессия</h3>
-            <img src="images/like.svg" alt="лайк" class="like">
+            <h2 class="card__title">Карачаево-Черкессия</h2>
+            <button type="button" class="card__button-like"><img src="images/like.svg" alt="лайк" class="like"></button>
           </div>
         </div>
       </section>
@@ -81,13 +80,13 @@
     </footer>
     <section class="popup">
       <div class="popup__container">
-        <img src="images/close-icon.png" alt="иконка крестик" class="popup__close-icon">
-        <form action="#">
+        <button type="button" class="popup__button-close-icon"><img src="images/close-icon.png" alt="иконка крестик" class="popup__close-icon"></button>
+        <form action="#" name="editform">
           <div class="popup__content">
             <h2 class="popup__title">Редактировать профиль</h2>
-            <p class="popup__input-container"><input type="text" value="" name="name" id="name" maxlength="20" class="popup__input"></p>
-            <p class="popup__input-container"><input type="text" value="" name="job" id="job" maxlength="40" class="popup__input"></p>
-            <button class="button button_type_save">Сохранить</button>
+            <input type="text" value="" name="name" id="name" class="popup__input">
+            <input type="text" value="" name="job" id="job" class="popup__input">
+            <button type="button" class="button button_type_save">Сохранить</button>
           </div>
         </form>
       </div>

@@ -8,7 +8,7 @@
   line-height: 22px;
   color: #FFFFFF;
   border-radius: 2px;
-  margin: 0;
+  margin: 40px 0 0;
 }
 
 .button_type_save:hover {
@@ -19,5 +19,6 @@
   .button_type_save {
     font-size: 14px;
     line-height: 17px;
+    margin-top: 35px;
   }
 }

@@ -1,6 +1,7 @@
 .button_type_edit {
   padding: 6px;
   vertical-align:baseline;
+  margin-bottom: 8px;
 }
 
 .button_type_edit:hover {

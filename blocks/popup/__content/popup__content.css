@@ -8,12 +8,14 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     gap: 0;
+    width: 430px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .popup__content {
         padding: 25px 22px;
+        width: 282px;
+        min-height: 310px;
     }
 }
