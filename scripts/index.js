@@ -11,21 +11,18 @@ function saveProfile(evt) {
   evt.preventDefault(); 
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
-  closePopup();
+  togglePopup(); 
 }
 
 function togglePopup() {
-  if (!popup.classList.contains("popup_opened")) {
-    popup.classList.add("popup_opened");
+  popup.classList.toggle("popup_opened");
+  if (popup.classList.contains("popup_opened")) {
     nameInput.value = profileName.innerText;
     jobInput.value = profileJob.innerText;
   }
 }
 
-function closePopup() {
-  popup.classList.remove("popup_opened");
-}
 
 saveButton.addEventListener("click", saveProfile);
 openButton.addEventListener("click", togglePopup);
-closeButton.addEventListener("click", closePopup);
+closeButton.addEventListener("click", togglePopup);
