@@ -1,5 +1,4 @@
 .profile__name {
-  max-width: 340px;
   margin: 0;
   font-style: normal;
   font-weight: 500;
@@ -30,6 +29,5 @@
 @media (max-width: 320px) {
   .profile__name {
     font-size: 26px;
-    max-width: 260px;
   }
 }
