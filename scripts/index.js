@@ -6,6 +6,8 @@ let profileName = document.querySelector(".profile__name");
 let profileJob = document.querySelector(".profile__job");
 let nameInput = document.querySelector("#name");
 let jobInput = document.querySelector("#job");
+const likes = document.querySelectorAll(".card__button-like");
+
 
 function saveProfile(evt) {
   evt.preventDefault(); 
@@ -22,7 +24,14 @@ function togglePopup() {
   }
 }
 
+// Лайк карточки
+const toggleLike = () => {
+  likes.forEach(like => {
+    like.addEventListener('click', event => event.target.classList.toggle("card__button-like_added"))
+  })
+}
 
+toggleLike();
 saveButton.addEventListener("click", saveProfile);
 openButton.addEventListener("click", togglePopup);
 closeButton.addEventListener("click", togglePopup);
