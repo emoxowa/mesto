@@ -37,6 +37,10 @@ let nameInput = document.querySelector("#name");
 let jobInput = document.querySelector("#job");
 const cards = document.querySelector(".cards");
 const addButton = document.querySelector(".button_type_add");
+const createButton = document.querySelector(".button_type_create");
+let cardNameInput = document.querySelector(".popup__input_type_card-name");
+let urlInput = document.querySelector(".popup__input_type_url");
+
 
 function closePopup(e) {
   let button = e.target;
@@ -85,7 +89,24 @@ function renderCards() {
 //2. Форма добавления карточки
 addButton.addEventListener("click", () => {
   createPopup.classList.toggle("popup_opened");
+  cardNameInput.value = "";
+  urlInput.value = "";
 });
+
+//3.Добавление карточки
+
+function createCard(evt) {
+  evt.preventDefault();
+  const templateCard = document.querySelector("#card-template").content;
+  const cardElement = templateCard.cloneNode(true);
+  const cardTitle = cardElement.querySelector(".card__title");
+  const cardImage = cardElement.querySelector(".card__image");
+  cardTitle.textContent = cardNameInput.value;
+  cardImage.src = urlInput.value;
+  cards.prepend(cardElement);
+  toggleLike();
+  removeCard();
+}
 
 
 //4. Лайк карточки
@@ -106,6 +127,7 @@ const removeCard = () => {
     let card = removeButton.closest(".card");
     removeButton.addEventListener("click", () => card.remove());
   });
+  console.log(removeButtons);
 };
 
 
@@ -115,3 +137,5 @@ removeCard();
 saveEditButton.addEventListener("click", saveProfile);
 editButton.addEventListener("click", openEditPopup);
 closeButtons.forEach((closeButton) => closeButton.addEventListener("click", closePopup));
+createButton.addEventListener("click", createCard);
+
