@@ -31,7 +31,7 @@
         </button>
       </section>
       <section class="cards">
-        <div class="card">
+        <!-- <div class="card">
           <img src="images/image_1.png" alt="Карачаевск" class="card__image">
            <div class="card__body">
             <h2 class="card__title">Карачаевск</h2>
@@ -72,26 +72,50 @@
             <h2 class="card__title">Карачаево-Черкессия</h2>
             <button type="button" class="card__button-like"></button>
           </div>
-        </div>
+        </div> -->
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
-    <section class="popup">
+    <section class="popup popup-edit">
       <div class="popup__container">
         <button type="button" class="popup__button-close-icon"><img src="images/close-icon.png" alt="иконка крестик" class="popup__close-icon"></button>
-        <form action="#" name="editform">
+        <form action="#" name="edit">
           <div class="popup__content">
             <h2 class="popup__title">Редактировать профиль</h2>
-            <input type="text" value="" name="name" id="name" class="popup__input">
-            <input type="text" value="" name="job" id="job" class="popup__input">
+            <input type="text" value="" name="name" id="name" class="popup__input" required>
+            <input type="text" value="" name="job" id="job" class="popup__input" required>
             <button type="submit" class="button button_type_save">Сохранить</button>
           </div>
         </form>
       </div>
     </section>
+    <section class="popup popup-create">
+      <div class="popup__container">
+        <button type="button" class="popup__button-close-icon"><img src="images/close-icon.png" alt="иконка крестик"
+            class="popup__close-icon"></button>
+        <form action="#" name="create">
+          <div class="popup__content">
+            <h2 class="popup__title">Новое место</h2>
+            <input type="text" value="" name="place-name" placeholder="Название" class="popup__input popup__input_type_card-name" required>
+            <input type="url" value="" name="link" placeholder="Ссылка на картинку" class="popup__input popup__input_type_url" required>
+            <button type="submit" class="button button_type_create">Создать</button>
+          </div>
+        </form>
+      </div>
+    </section>
   </div>
+  <template id="card-template">
+    <div class="card">
+      <button type="button" class="card__button-remove"></button>
+      <img src="" alt="" class="card__image">
+      <div class="card__body">
+        <h2 class="card__title"></h2>
+        <button type="button" class="card__button-like"></button>
+      </div>
+    </div>
+  </template>
   <script src="scripts/index.js"></script>
 </body>
 </html>

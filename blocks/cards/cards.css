@@ -4,7 +4,6 @@
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 20px 17px;
   padding: 50px 15.625% 66px;
 }
