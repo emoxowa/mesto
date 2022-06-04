@@ -29,6 +29,7 @@ const editButton = document.querySelector(".button_type_edit");
 const popup = document.querySelector(".popup");
 const editPopup = document.querySelector(".popup-edit");
 const createPopup = document.querySelector(".popup-create");
+const imagePopup = document.querySelector(".popup-image");
 const closeButtons = document.querySelectorAll(".popup__close-icon");
 const saveEditButton = document.querySelector(".button_type_save");
 let profileName = document.querySelector(".profile__name");
@@ -104,8 +105,8 @@ function createCard(evt) {
   cardTitle.textContent = cardNameInput.value;
   cardImage.src = urlInput.value;
   cards.prepend(cardElement);
-  toggleLike();
   removeCard();
+  openImagePopup();
 }
 
 
@@ -127,15 +128,31 @@ const removeCard = () => {
     let card = removeButton.closest(".card");
     removeButton.addEventListener("click", () => card.remove());
   });
-  console.log(removeButtons);
 };
-
 
 renderCards();
 toggleLike();
 removeCard();
+
 saveEditButton.addEventListener("click", saveProfile);
 editButton.addEventListener("click", openEditPopup);
 closeButtons.forEach((closeButton) => closeButton.addEventListener("click", closePopup));
 createButton.addEventListener("click", createCard);
 
+//6. Открытие попапа с картинкой
+
+function openImagePopup() {
+  let images = document.querySelectorAll(".card__image");
+  images.forEach((image) => image.addEventListener('click', function () {
+    imagePopup.classList.add("popup_opened");
+    const img = document.querySelector(".popup__image");
+    const caption = document.querySelector(".popup__caption");
+    img.src = image.src;
+    caption.textContent = image.parentElement
+      .querySelector(".card__body")
+      .querySelector(".card__title").textContent;
+  }
+  ));
+}
+
+openImagePopup();
