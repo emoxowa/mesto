@@ -22,6 +22,7 @@ const iconClosePopupImage = document.querySelector(".popup-icon-close-image");
 const templateCard = document.querySelector("#card-template").content;
 
 
+
 function closePopup(popupName) {
   popupName.classList.remove("popup_opened");
 }
@@ -46,19 +47,6 @@ function openPopupEdit() {
 
 //1. Создание карточек
 
-// Создание исходных карточек
-
-
-function createCard({ name, link }) {
-  const cardElement = templateCard.cloneNode(true);
-  const cardTitle = cardElement.querySelector(".card__title");
-  const cardImage = cardElement.querySelector(".card__image");
-  cardTitle.textContent = name;
-  cardImage.src = link;
-  cardImage.setAttribute("alt", cardTitle.textContent);
-  return cardElement;
-} 
-
 function renderCards(data) {
   const cardElement = createCard(data);
   cardsContainer.prepend(cardElement);
@@ -77,6 +65,37 @@ function renderInitialCards() {
 
 renderInitialCards();
 
+
+function createCard({ name, link }) {
+  const cardElement = templateCard.cloneNode(true);
+  const cardTitle = cardElement.querySelector(".card__title");
+  const cardImage = cardElement.querySelector(".card__image");
+  cardTitle.textContent = name;
+  cardImage.src = link;
+  cardImage.setAttribute("alt", cardTitle.textContent);
+
+  //Слушатель на корзину
+  const buttonRemove = cardElement.querySelector(".card__button-remove");
+  buttonRemove.addEventListener("click", removeCard);
+  
+  //Слушатель на лайк
+  const buttonLike = cardElement.querySelector(".card__button-like");
+  buttonLike.addEventListener("click", toggleLike);
+
+  // Слушатель на картинку
+  const img = popupImage.querySelector(".popup__image");
+  const caption = popupImage.querySelector(".popup__caption");
+  cardImage.addEventListener('click', () => {
+    img.setAttribute('src', link);
+    img.setAttribute("alt", name);
+    caption.textContent = name;
+    openPopup(popupImage);
+  });
+
+  return cardElement;
+} 
+
+
 //2. Форма добавления карточки
 
 buttonAdd.addEventListener("click", () => {
@@ -86,8 +105,8 @@ buttonAdd.addEventListener("click", () => {
 });
 
 
-
 //3.Добавление новой карточки карточки
+
 function handleAddCard(e) {
   e.preventDefault();
   const name = cardNameInput.value;
@@ -95,10 +114,23 @@ function handleAddCard(e) {
   addCard({ name, link });
 }
 
-function addCard({name, link}) {
+function addCard({ name, link }) {
   renderCards({ name, link });
   closePopup(popupCreate);
 }
+
+// 4. Лайк карточки
+function toggleLike(evt) {
+  evt.target.classList.toggle("card__button-like_added");
+}
+
+// 5. Удаление карточки
+function removeCard(evt) {
+  evt.target.closest(".card").remove();
+}
+
+// --------------------------------------------------//
+
 
 
 buttonSaveEdit.addEventListener("click", saveProfile);
@@ -115,29 +147,3 @@ iconClosePopupImage.addEventListener('click', () => {
 
 buttonCreate.addEventListener("click", handleAddCard);
 
-
-document.addEventListener("click", function (e) {
-    const element = e.target;
-    console.log(element);
-    // открытие popup с изображением
-    if (element && element.className == "card__image") {
-      openPopup(popupImage);
-      const img = document.querySelector(".popup__image");
-      const caption = document.querySelector(".popup__caption");
-      img.src = element.src;
-      caption.textContent = element.parentElement
-        .querySelector(".card__body")
-        .querySelector(".card__title").textContent;
-      img.setAttribute("alt", caption.textContent);
-    }
-    // добавление лайка
-    if (element && element.classList.contains("card__button-like")) {
-      element.classList.toggle("card__button-like_added");
-    }
-
-    // удаление карточки
-    if (element && element.className == "card__button-remove") {
-      const card = element.closest(".card");
-      card.remove();
-    }
-  });
