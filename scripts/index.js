@@ -9,8 +9,8 @@ const popupImage = document.querySelector(".popup-image");
 const buttonSaveEdit = document.querySelector(".button_type_save");
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__job");
-const nameInput = document.querySelector("#name");
-const jobInput = document.querySelector("#job");
+const nameInput = document.querySelector("#name__input");
+const jobInput = document.querySelector("#job__input");
 const cardsContainer = document.querySelector(".cards");
 const buttonAdd = document.querySelector(".button_type_add");
 const buttonCreate = document.querySelector(".button_type_create");
@@ -26,6 +26,7 @@ const templateCard = document.querySelector("#card-template").content;
 function closePopup(popupName) {
   popupName.classList.remove("popup_opened");
 }
+
 
 function openPopup(popupName) {
   popupName.classList.add("popup_opened");
@@ -129,9 +130,14 @@ function removeCard(evt) {
   evt.target.closest(".card").remove();
 }
 
+// function hideInputError() {
+//     document.querySelector(".popup__input-error").textContent = "";
+//     document
+//       .querySelector(".popup__input")
+//       .classList.remove("popup__input_type_error");
+// }
+
 // --------------------------------------------------//
-
-
 
 buttonSaveEdit.addEventListener("click", saveProfile);
 buttonEdit.addEventListener("click", openPopupEdit);
@@ -146,4 +152,6 @@ iconClosePopupImage.addEventListener('click', () => {
 })
 
 buttonCreate.addEventListener("click", handleAddCard);
+
+// --------------------------------------------------//
 

@@ -15,6 +15,10 @@
   opacity: 0.8;
 }
 
+.button_type_save[disabled]:hover {
+  opacity: 0.2;
+}
+
 @media (max-width: 768px) {
   .button_type_save {
     font-size: 14px;
