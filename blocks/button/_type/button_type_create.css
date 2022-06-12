@@ -15,6 +15,10 @@
   opacity: 0.8;
 }
 
+.button_type_create[disabled]:hover {
+  opacity: 0.2;
+}
+
 @media (max-width: 768px) {
   .button_type_create {
     font-size: 14px;

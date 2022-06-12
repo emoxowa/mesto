@@ -20,16 +20,34 @@ const iconClosePopupEdit = document.querySelector(".popup-icon-close-edit");
 const iconClosePopupCreate = document.querySelector(".popup-icon-close-create");
 const iconClosePopupImage = document.querySelector(".popup-icon-close-image");
 const templateCard = document.querySelector("#card-template").content;
+const popups = document.querySelectorAll('.popup');
 
+
+// Закрытие попапа нажатием на Esc
+function pressEscape(evt) {
+  const popupOpened = document.querySelector(".popup_opened");
+  if (evt.key === "Escape") {
+    closePopup(popupOpened);
+  }
+}
+
+// Закрытие попапа кликом на оверлей
+function clickOverlay(evt) {
+  const popupOpened = document.querySelector(".popup_opened");
+  if (evt.target === evt.currentTarget) {
+    closePopup(popupOpened);
+  }
+}
 
 
 function closePopup(popupName) {
   popupName.classList.remove("popup_opened");
+  document.removeEventListener("keydown", pressEscape);
 }
-
 
 function openPopup(popupName) {
   popupName.classList.add("popup_opened");
+  document.addEventListener("keydown", pressEscape);
 }
 
 function saveProfile(evt) {
@@ -108,8 +126,8 @@ buttonAdd.addEventListener("click", () => {
 
 //3.Добавление новой карточки карточки
 
-function handleAddCard(e) {
-  e.preventDefault();
+function handleAddCard(evt) {
+  evt.preventDefault();
   const name = cardNameInput.value;
   const link = urlInput.value;
   addCard({ name, link });
@@ -130,17 +148,12 @@ function removeCard(evt) {
   evt.target.closest(".card").remove();
 }
 
-// function hideInputError() {
-//     document.querySelector(".popup__input-error").textContent = "";
-//     document
-//       .querySelector(".popup__input")
-//       .classList.remove("popup__input_type_error");
-// }
-
 // --------------------------------------------------//
 
 buttonSaveEdit.addEventListener("click", saveProfile);
 buttonEdit.addEventListener("click", openPopupEdit);
+
+
 iconClosePopupEdit.addEventListener('click', () => {
   closePopup(popupEdit);
 })
@@ -152,6 +165,8 @@ iconClosePopupImage.addEventListener('click', () => {
 })
 
 buttonCreate.addEventListener("click", handleAddCard);
+
+popups.forEach((popup) => popup.addEventListener("click", clickOverlay));
 
 // --------------------------------------------------//
 

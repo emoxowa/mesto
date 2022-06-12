@@ -25,6 +25,7 @@ function hideInputError(formElement, inputElement) {
 }
 
 function checkInputValidity(formElement, inputElement) {
+  console.log(inputElement.validity.valid);
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
@@ -35,6 +36,7 @@ function checkInputValidity(formElement, inputElement) {
 function setEventListeners(formElement){
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
+  toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
       checkInputValidity(formElement, inputElement);
@@ -71,4 +73,3 @@ function toggleButtonState(inputList, buttonElement) {
     buttonElement.removeAttribute("disabled");
   }
 }
-
