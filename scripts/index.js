@@ -2,7 +2,7 @@
 
 import { initialCards } from "./cards.js";
 
-const buttonEdit = document.querySelector(".button_type_edit");
+export const buttonEdit = document.querySelector(".button_type_edit");
 const popupEdit = document.querySelector(".popup-edit");
 const popupCreate = document.querySelector(".popup-create");
 const popupImage = document.querySelector(".popup-image");
@@ -12,7 +12,7 @@ const profileJob = document.querySelector(".profile__job");
 const nameInput = document.querySelector("#name__input");
 const jobInput = document.querySelector("#job__input");
 const cardsContainer = document.querySelector(".cards");
-const buttonAdd = document.querySelector(".button_type_add");
+export const buttonAdd = document.querySelector(".button_type_add");
 const buttonCreate = document.querySelector(".button_type_create");
 const cardNameInput = document.querySelector(".popup__input_type_card-name");
 const urlInput = document.querySelector(".popup__input_type_url");
@@ -169,4 +169,3 @@ buttonCreate.addEventListener("click", handleAddCard);
 popups.forEach((popup) => popup.addEventListener("click", clickOverlay));
 
 // --------------------------------------------------//
-

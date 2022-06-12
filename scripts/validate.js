@@ -1,5 +1,8 @@
 "use strict";
 
+import { buttonEdit } from "./index.js";
+import { buttonAdd } from "./index.js";
+
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -25,7 +28,6 @@ function hideInputError(formElement, inputElement) {
 }
 
 function checkInputValidity(formElement, inputElement) {
-  console.log(inputElement.validity.valid);
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
@@ -56,7 +58,7 @@ function enableValidation(formSelector) {
   });
 }
 
-enableValidation(validationConfig.formSelector); 
+
 
 function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
@@ -73,3 +75,22 @@ function toggleButtonState(inputList, buttonElement) {
     buttonElement.removeAttribute("disabled");
   }
 }
+
+
+buttonEdit.addEventListener("click", function () {
+  const formEdit = document.querySelector("#form-edit");
+  const inputsError = formEdit.querySelectorAll(".popup__input-error");
+    inputsError.forEach((inputError) => {
+      hideInputError(formEdit, inputError.previousElementSibling);
+    });
+  });
+
+buttonAdd.addEventListener("click", function () {
+  const formAdd = document.querySelector("#form-add");
+  const inputsError = formAdd.querySelectorAll(".popup__input-error");
+    inputsError.forEach((inputError) => {
+      hideInputError(formAdd, inputError.previousElementSibling);
+    });
+  });
+
+  enableValidation(validationConfig.formSelector); 
