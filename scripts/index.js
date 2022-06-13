@@ -1,8 +1,11 @@
 "use strict";
 
 import { initialCards } from "./cards.js";
+import { validatePopup } from "./validate.js";
+import { settings } from "./validate.js";
 
-export const buttonEdit = document.querySelector(".button_type_edit");
+
+const buttonEdit = document.querySelector(".button_type_edit");
 const popupEdit = document.querySelector(".popup-edit");
 const popupCreate = document.querySelector(".popup-create");
 const popupImage = document.querySelector(".popup-image");
@@ -12,7 +15,7 @@ const profileJob = document.querySelector(".profile__job");
 const nameInput = document.querySelector("#name-input");
 const jobInput = document.querySelector("#job-input");
 const cardsContainer = document.querySelector(".cards");
-export const buttonAdd = document.querySelector(".button_type_add");
+const buttonAdd = document.querySelector(".button_type_add");
 const buttonCreate = document.querySelector(".button_type_create");
 const cardNameInput = document.querySelector(".popup__input_type_card-name");
 const urlInput = document.querySelector(".popup__input_type_url");
@@ -25,8 +28,8 @@ const popups = document.querySelectorAll('.popup');
 
 // Закрытие попапа нажатием на Esc
 function pressEscape(evt) {
-  const popupOpened = document.querySelector(".popup_opened");
   if (evt.key === "Escape") {
+    const popupOpened = document.querySelector(".popup_opened");
     closePopup(popupOpened);
   }
 }
@@ -34,11 +37,10 @@ function pressEscape(evt) {
 // Закрытие попапа кликом на оверлей
 function clickOverlay(evt) {
   const popupOpened = document.querySelector(".popup_opened");
-  if (evt.target === evt.currentTarget) {
+  if (evt.target === evt.currentTarget && popupOpened) {
     closePopup(popupOpened);
   }
 }
-
 
 function closePopup(popupName) {
   popupName.classList.remove("popup_opened");
@@ -48,6 +50,15 @@ function closePopup(popupName) {
 function openPopup(popupName) {
   popupName.classList.add("popup_opened");
   document.addEventListener("keydown", pressEscape);
+  if (!popupName.classList.contains("popup-image")) {
+    validatePopup(popupName, settings);
+  } 
+}
+
+function openPopupEdit() {
+    openPopup(popupEdit);
+    nameInput.value = profileName.innerText;
+    jobInput.value = profileJob.innerText;
 }
 
 function saveProfile(evt) {
@@ -55,13 +66,6 @@ function saveProfile(evt) {
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closePopup(popupEdit);
-}
-
-
-function openPopupEdit() {
-    openPopup(popupEdit);
-    nameInput.value = profileName.innerText;
-    jobInput.value = profileJob.innerText;
 }
 
 //1. Создание карточек
@@ -118,9 +122,9 @@ function createCard({ name, link }) {
 //2. Форма добавления карточки
 
 buttonAdd.addEventListener("click", () => {
-  openPopup(popupCreate);
   cardNameInput.value = "";
   urlInput.value = "";
+  openPopup(popupCreate);
 });
 
 
@@ -169,3 +173,4 @@ buttonCreate.addEventListener("click", handleAddCard);
 popups.forEach((popup) => popup.addEventListener("click", clickOverlay));
 
 // --------------------------------------------------//
+
