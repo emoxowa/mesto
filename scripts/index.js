@@ -6,38 +6,27 @@ import { settings } from "./validate.js";
 
 
 const buttonEdit = document.querySelector(".button_type_edit");
+const buttonAdd = document.querySelector(".button_type_add");
 const popupEdit = document.querySelector(".popup-edit");
 const popupCreate = document.querySelector(".popup-create");
 const popupImage = document.querySelector(".popup-image");
-const buttonSaveEdit = document.querySelector(".button_type_save");
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__job");
 const nameInput = document.querySelector("#name-input");
 const jobInput = document.querySelector("#job-input");
 const cardsContainer = document.querySelector(".cards");
-const buttonAdd = document.querySelector(".button_type_add");
-const buttonCreate = document.querySelector(".button_type_create");
 const cardNameInput = document.querySelector(".popup__input_type_card-name");
 const urlInput = document.querySelector(".popup__input_type_url");
-const iconClosePopupEdit = document.querySelector(".popup-icon-close-edit");
-const iconClosePopupCreate = document.querySelector(".popup-icon-close-create");
-const iconClosePopupImage = document.querySelector(".popup-icon-close-image");
 const templateCard = document.querySelector("#card-template").content;
 const popups = document.querySelectorAll('.popup');
+const formEdit = document.querySelector("#form-edit");
+const formAdd = document.querySelector("#form-add");
 
 
 // Закрытие попапа нажатием на Esc
 function pressEscape(evt) {
   if (evt.key === "Escape") {
     const popupOpened = document.querySelector(".popup_opened");
-    closePopup(popupOpened);
-  }
-}
-
-// Закрытие попапа кликом на оверлей
-function clickOverlay(evt) {
-  const popupOpened = document.querySelector(".popup_opened");
-  if (evt.target === evt.currentTarget && popupOpened) {
     closePopup(popupOpened);
   }
 }
@@ -50,9 +39,6 @@ function closePopup(popupName) {
 function openPopup(popupName) {
   popupName.classList.add("popup_opened");
   document.addEventListener("keydown", pressEscape);
-  if (!popupName.classList.contains("popup-image")) {
-    validatePopup(popupName, settings);
-  } 
 }
 
 function openPopupEdit() {
@@ -75,15 +61,8 @@ function renderCards(data) {
   cardsContainer.prepend(cardElement);
 }
 
-const cardInfos = initialCards.map((item) => {
-  return {
-    name: item.name,
-    link: item.link,
-  };
-});
-
 function renderInitialCards() {
-  cardInfos.forEach((data) => renderCards(data));
+   initialCards.forEach(renderCards);
 }
 
 renderInitialCards();
@@ -154,23 +133,25 @@ function removeCard(evt) {
 
 // --------------------------------------------------//
 
-buttonSaveEdit.addEventListener("click", saveProfile);
+formEdit.addEventListener("submit", saveProfile);
 buttonEdit.addEventListener("click", openPopupEdit);
+formAdd.addEventListener("submit", handleAddCard);
 
+// Закрытие попапа кликом на оверлей + Закрытие попапа кликом на крестик 
+popups.forEach( (popup) => {
+  popup.addEventListener("mousedown", (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup);
+    }
+    if (evt.target.classList.contains("popup__close-icon")) {
+      closePopup(popup);
+    }
+   })
+});
+// Спасибо большое за подробное объяснение этого способа (*_*) 
 
-iconClosePopupEdit.addEventListener('click', () => {
-  closePopup(popupEdit);
-})
-iconClosePopupCreate.addEventListener('click', () => {
-  closePopup(popupCreate);
-})
-iconClosePopupImage.addEventListener('click', () => {
-  closePopup(popupImage);
-})
-
-buttonCreate.addEventListener("click", handleAddCard);
-
-popups.forEach((popup) => popup.addEventListener("click", clickOverlay));
+buttonEdit.addEventListener("click", () => validatePopup(popupEdit, settings));
+buttonAdd.addEventListener("click", () => validatePopup(popupCreate, settings));
 
 // --------------------------------------------------//
 
