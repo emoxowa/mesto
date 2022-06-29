@@ -1,5 +1,6 @@
 "use strict";
 
+import { Card } from "./Card.js";
 import { initialCards } from "./cards.js";
 import { validatePopup } from "./validate.js";
 import { settings } from "./validate.js";
@@ -17,7 +18,6 @@ const jobInput = document.querySelector("#job-input");
 const cardsContainer = document.querySelector(".cards");
 const cardNameInput = document.querySelector(".popup__input_type_card-name");
 const urlInput = document.querySelector(".popup__input_type_url");
-const templateCard = document.querySelector("#card-template").content;
 const popups = document.querySelectorAll('.popup');
 const formEdit = document.querySelector("#form-edit");
 const formAdd = document.querySelector("#form-add");
@@ -56,46 +56,54 @@ function saveProfile(evt) {
 
 //1. Создание карточек
 
+
+function createCard(data) {
+  const card = new Card(data, "#card-template", openPopupImage);
+  const cardElement = card.generateCard();
+
+  return cardElement;
+}
+
+
 function renderCards(data) {
-  const cardElement = createCard(data);
-  cardsContainer.prepend(cardElement);
+  cardsContainer.prepend(createCard(data));
 }
 
 function renderInitialCards() {
-   initialCards.forEach(renderCards);
+  initialCards.forEach(renderCards);
 }
 
 renderInitialCards();
 
 
-function createCard({ name, link }) {
-  const cardElement = templateCard.cloneNode(true);
-  const cardTitle = cardElement.querySelector(".card__title");
-  const cardImage = cardElement.querySelector(".card__image");
-  cardTitle.textContent = name;
-  cardImage.src = link;
-  cardImage.setAttribute("alt", cardTitle.textContent);
+// function createCard({ name, link }) {
+//   const cardElement = templateCard.cloneNode(true);
+//   const cardTitle = cardElement.querySelector(".card__title");
+//   const cardImage = cardElement.querySelector(".card__image");
+//   cardTitle.textContent = name;
+//   cardImage.src = link;
+//   cardImage.setAttribute("alt", cardTitle.textContent);
 
-  //Слушатель на корзину
-  const buttonRemove = cardElement.querySelector(".card__button-remove");
-  buttonRemove.addEventListener("click", removeCard);
+//   //Слушатель на корзину
+//   const buttonRemove = cardElement.querySelector(".card__button-remove");
+//   buttonRemove.addEventListener("click", removeCard);
   
-  //Слушатель на лайк
-  const buttonLike = cardElement.querySelector(".card__button-like");
-  buttonLike.addEventListener("click", toggleLike);
+//   //Слушатель на лайк
+//   const buttonLike = cardElement.querySelector(".card__button-like");
+//   buttonLike.addEventListener("click", toggleLike);
 
-  // Слушатель на картинку
-  const img = popupImage.querySelector(".popup__image");
-  const caption = popupImage.querySelector(".popup__caption");
-  cardImage.addEventListener('click', () => {
-    img.setAttribute('src', link);
-    img.setAttribute("alt", name);
-    caption.textContent = name;
-    openPopup(popupImage);
-  });
+//   // Слушатель на картинку
+//   const img = popupImage.querySelector(".popup__image");
+//   const caption = popupImage.querySelector(".popup__caption");
+//   cardImage.addEventListener('click', () => {
+//     img.setAttribute('src', link);
+//     img.setAttribute("alt", name);
+//     caption.textContent = name;
+//     openPopup(popupImage);
+//   });
 
-  return cardElement;
-} 
+//   return cardElement;
+// } 
 
 
 //2. Форма добавления карточки
@@ -121,14 +129,15 @@ function addCard({ name, link }) {
   closePopup(popupCreate);
 }
 
-// 4. Лайк карточки
-function toggleLike(evt) {
-  evt.target.classList.toggle("card__button-like_added");
-}
+//4. Открытие popup c картинкой
 
-// 5. Удаление карточки
-function removeCard(evt) {
-  evt.target.closest(".card").remove();
+function openPopupImage({ name, link }) {
+  const img = popupImage.querySelector(".popup__image");
+  const caption = popupImage.querySelector(".popup__caption");
+  img.setAttribute("src", link);
+  img.setAttribute("alt", name);
+  caption.textContent = name;
+  openPopup(popupImage);
 }
 
 // --------------------------------------------------//
@@ -148,7 +157,6 @@ popups.forEach( (popup) => {
     }
    })
 });
-// Спасибо большое за подробное объяснение этого способа (*_*) 
 
 buttonEdit.addEventListener("click", () => validatePopup(popupEdit, settings));
 buttonAdd.addEventListener("click", () => validatePopup(popupCreate, settings));
