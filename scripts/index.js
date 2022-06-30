@@ -138,11 +138,11 @@ popups.forEach( (popup) => {
 
 // Валидация
 const validatorEdit = new FormValidator(settings, formEdit);
-validatorEdit._enableValidation();
+validatorEdit.enableValidation();
 buttonEdit.addEventListener("click", () => validatorEdit._validatePopup());
 
 const validatorAdd = new FormValidator(settings, formAdd);
-validatorAdd._enableValidation();
+validatorAdd.enableValidation();
 buttonAdd.addEventListener("click", () => validatorAdd._validatePopup());
 
 
