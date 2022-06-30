@@ -1,3 +1,5 @@
+"use strict";
+
 class Card {
   constructor({ name, link }, cardSelector, openPopupImage) {
     this._name = name;
@@ -39,11 +41,11 @@ class Card {
     this._element.remove();
   }
 
-  _openImage() {
+  _handleOpenImage() {
     this._openPopupImage({
       name: this._name,
-      link: this._link
-    })
+      link: this._link,
+    });
   }
 
   _setEventListeners() {
@@ -54,7 +56,7 @@ class Card {
       this._removeCard();
     });
     this._cardImage.addEventListener("click", () => {
-      this._openImage();
+      this._handleOpenImage();
     });
   }
 }

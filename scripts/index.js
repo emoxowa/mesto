@@ -1,10 +1,18 @@
 "use strict";
 
 import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
 import { initialCards } from "./cards.js";
-import { validatePopup } from "./validate.js";
-import { settings } from "./validate.js";
 
+
+const settings = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+};
 
 const buttonEdit = document.querySelector(".button_type_edit");
 const buttonAdd = document.querySelector(".button_type_add");
@@ -76,36 +84,6 @@ function renderInitialCards() {
 renderInitialCards();
 
 
-// function createCard({ name, link }) {
-//   const cardElement = templateCard.cloneNode(true);
-//   const cardTitle = cardElement.querySelector(".card__title");
-//   const cardImage = cardElement.querySelector(".card__image");
-//   cardTitle.textContent = name;
-//   cardImage.src = link;
-//   cardImage.setAttribute("alt", cardTitle.textContent);
-
-//   //Слушатель на корзину
-//   const buttonRemove = cardElement.querySelector(".card__button-remove");
-//   buttonRemove.addEventListener("click", removeCard);
-  
-//   //Слушатель на лайк
-//   const buttonLike = cardElement.querySelector(".card__button-like");
-//   buttonLike.addEventListener("click", toggleLike);
-
-//   // Слушатель на картинку
-//   const img = popupImage.querySelector(".popup__image");
-//   const caption = popupImage.querySelector(".popup__caption");
-//   cardImage.addEventListener('click', () => {
-//     img.setAttribute('src', link);
-//     img.setAttribute("alt", name);
-//     caption.textContent = name;
-//     openPopup(popupImage);
-//   });
-
-//   return cardElement;
-// } 
-
-
 //2. Форма добавления карточки
 
 buttonAdd.addEventListener("click", () => {
@@ -158,8 +136,13 @@ popups.forEach( (popup) => {
    })
 });
 
-buttonEdit.addEventListener("click", () => validatePopup(popupEdit, settings));
-buttonAdd.addEventListener("click", () => validatePopup(popupCreate, settings));
+// Валидация
+const validatorEdit = new FormValidator(settings, formEdit);
+validatorEdit._enableValidation();
+buttonEdit.addEventListener("click", () => validatorEdit._validatePopup());
 
-// --------------------------------------------------//
+const validatorAdd = new FormValidator(settings, formAdd);
+validatorAdd._enableValidation();
+buttonAdd.addEventListener("click", () => validatorAdd._validatePopup());
+
 

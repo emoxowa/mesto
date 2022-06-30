@@ -16,6 +16,7 @@ https://emoxowa.github.io/mesto/
   * CSS3 (Flexbox, адаптивная верстка, и др.) 
   * BEM
   * Javascript
+  * ООП
 
 Язык сайта: русский.
 
