@@ -11,6 +11,9 @@ class FormValidator {
     this._errorClass = errorClass;
 
     this._formElement = formElement;
+
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
   }
 
   _showInputError(inputElement) {
@@ -52,9 +55,6 @@ class FormValidator {
   }
 
   _setEventListeners() {
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-
     this._toggleButtonState();
 
     this._inputList.forEach((inputElement) => {
@@ -69,7 +69,7 @@ class FormValidator {
     this._setEventListeners();
   }
 
-  _validatePopup() {
+  validatePopup() {
   this._inputList.forEach((inputElement) =>
     inputElement.classList.contains(this._inputErrorClass) &&
       this._hideInputError(inputElement));

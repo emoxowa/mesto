@@ -73,12 +73,12 @@ function createCard(data) {
 }
 
 
-function renderCards(data) {
+function renderCard(data) {
   cardsContainer.prepend(createCard(data));
 }
 
 function renderInitialCards() {
-  initialCards.forEach(renderCards);
+  initialCards.forEach(renderCard);
 }
 
 renderInitialCards();
@@ -103,7 +103,7 @@ function handleAddCard(evt) {
 }
 
 function addCard({ name, link }) {
-  renderCards({ name, link });
+  renderCard({ name, link });
   closePopup(popupCreate);
 }
 
@@ -139,10 +139,10 @@ popups.forEach( (popup) => {
 // Валидация
 const validatorEdit = new FormValidator(settings, formEdit);
 validatorEdit.enableValidation();
-buttonEdit.addEventListener("click", () => validatorEdit._validatePopup());
+buttonEdit.addEventListener("click", () => validatorEdit.validatePopup());
 
 const validatorAdd = new FormValidator(settings, formAdd);
 validatorAdd.enableValidation();
-buttonAdd.addEventListener("click", () => validatorAdd._validatePopup());
+buttonAdd.addEventListener("click", () => validatorAdd.validatePopup());
 
 
