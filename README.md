@@ -17,6 +17,7 @@ https://emoxowa.github.io/mesto/
   * BEM
   * Javascript
   * ООП
+  * Webpack
 
 Язык сайта: русский.
 
