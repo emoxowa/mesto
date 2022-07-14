@@ -1,5 +1,7 @@
 "use strict";
 
+import "./index.css";
+
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
