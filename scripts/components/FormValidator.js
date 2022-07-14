@@ -1,6 +1,6 @@
 "use strict";
 
-class FormValidator {
+export default class FormValidator {
   constructor({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass }, formElement)
   {
     this._formSelector = formSelector;
@@ -78,5 +78,3 @@ class FormValidator {
 
 }
 
-
-export { FormValidator };

@@ -1,11 +1,11 @@
 "use strict";
 
-class Card {
-  constructor({ name, link }, cardSelector, openPopupImage) {
+export default class Card {
+  constructor({ name, link }, cardSelector, handleCardClick) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
-    this._openPopupImage = openPopupImage;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -42,13 +42,6 @@ class Card {
     this._element = null;
   }
 
-  _handleOpenImage() {
-    this._openPopupImage({
-      name: this._name,
-      link: this._link,
-    });
-  }
-
   _setEventListeners() {
     this._buttonLike.addEventListener("click", () => {
       this._toggleLike();
@@ -57,9 +50,7 @@ class Card {
       this._removeCard();
     });
     this._cardImage.addEventListener("click", () => {
-      this._handleOpenImage();
+      this._handleCardClick();
     });
   }
 }
-
-export { Card };
