@@ -16,8 +16,6 @@ import {
   buttonAdd,
   nameInput,
   jobInput,
-  cardNameInput,
-  urlInput,
   formEdit,
   formAdd,
 } from "../utils/constants.js";
