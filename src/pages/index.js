@@ -55,21 +55,36 @@ popupImage.setEventListeners();
 
 // popupCreate
 
-const popupCreate = new PopupWithForm(".popup-create", (item) => {
-  item = {
-    name: cardNameInput.value,
-    link: urlInput.value,
+const popupCreate = new PopupWithForm(".popup-create", handleFormSubmit);
+
+function handleFormSubmit(formData) {
+  const cardItem = {
+    name: formData["place-name"],
+    link: formData['link'],
   };
-  const card = createCard(item);
+  const card = createCard(cardItem);
   cardList.addItem(card);
   popupCreate.close();
-});
+}
 
 buttonAdd.addEventListener("click", () => {
   popupCreate.open();
 });
 
 popupCreate.setEventListeners();
+//   () => {
+//   const inputValues = popupCreate._getInputValues();
+//   console.log(inputValues);
+//   item = {
+//     name: inputValues.['name'],
+//     link: inputValues.['link'],
+//   };
+//   const card = createCard(item);
+//   cardList.addItem(card);
+//   popupCreate.close();
+// });
+
+
 
 
 // popupEdit
