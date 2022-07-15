@@ -72,19 +72,6 @@ buttonAdd.addEventListener("click", () => {
 });
 
 popupCreate.setEventListeners();
-//   () => {
-//   const inputValues = popupCreate._getInputValues();
-//   console.log(inputValues);
-//   item = {
-//     name: inputValues.['name'],
-//     link: inputValues.['link'],
-//   };
-//   const card = createCard(item);
-//   cardList.addItem(card);
-//   popupCreate.close();
-// });
-
-
 
 
 // popupEdit
