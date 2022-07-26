@@ -8,6 +8,7 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api";
 
 import {
   initialCards,
@@ -19,6 +20,18 @@ import {
   formEdit,
   formAdd,
 } from "../utils/constants.js";
+
+
+const api = new Api({
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-46",
+  headers: {
+    authorization: "7f0a4e86-e84d-44bd-b3f3-cc21b6ec49e1",
+    "Content-Type": "application/json",
+  },
+});
+
+
+  
 
 
 //Создание карточек
@@ -72,12 +85,21 @@ buttonAdd.addEventListener("click", () => {
 popupCreate.setEventListeners();
 
 
-// popupEdit
+// userInfo / popupEdit
 
 const userInfo = new UserInfo({
   userNameSelector: '.profile__name',
   userJobSelector: '.profile__job',
 });
+
+api
+  .getUserInfoFromServer()
+  .then((userData) => {
+    userInfo.setUserInfo(userData);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const popupEdit = new PopupWithForm(".popup-edit", (formData) => {
   userInfo.setUserInfo(formData);
@@ -87,7 +109,7 @@ const popupEdit = new PopupWithForm(".popup-edit", (formData) => {
 buttonEdit.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
   nameInput.value = userData.name;
-  jobInput.value = userData.job;
+  jobInput.value = userData.about;
   popupEdit.open();
 });
 
