@@ -11,7 +11,6 @@ import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api";
 
 import {
-  initialCards,
   settings,
   buttonEdit,
   buttonAdd,
@@ -21,7 +20,7 @@ import {
   formAdd,
 } from "../utils/constants.js";
 
-
+// Api
 const api = new Api({
   baseUrl: "https://mesto.nomoreparties.co/v1/cohort-46",
   headers: {
@@ -29,9 +28,6 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-
-
-  
 
 
 //Создание карточек
@@ -45,10 +41,8 @@ function createCard(data) {
   return cardElement;
 }
 
-
 const cardList = new Section(
   {
-    items: initialCards,
     renderer: (item) => {
       const card = createCard(item);
       cardList.addItem(card);
@@ -57,7 +51,14 @@ const cardList = new Section(
   ".cards"
 );
 
-cardList.renderItems();
+api
+  .getInitialCardsFromServer()
+  .then((cardsData) => {
+    cardList.renderItems(cardsData);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // popupImage
 
@@ -66,17 +67,19 @@ popupImage.setEventListeners();
 
 // popupCreate
 
-const popupCreate = new PopupWithForm(".popup-create", handleFormSubmit);
+const popupCreate = new PopupWithForm(".popup-create", (formData) => {
+  api.setCardToServer(formData)
+    .then((res) => {
+      const card = createCard(res);
+      cardList.addItem(card);
+      popupCreate.close();
+    })
+    .catch((err) => {
+    console.log(err);
+  })
 
-function handleFormSubmit(formData) {
-  const cardItem = {
-    name: formData["place-name"],
-    link: formData['link'],
-  };
-  const card = createCard(cardItem);
-  cardList.addItem(card);
-  popupCreate.close();
-}
+
+})
 
 buttonAdd.addEventListener("click", () => {
   popupCreate.open();
@@ -92,8 +95,7 @@ const userInfo = new UserInfo({
   userJobSelector: '.profile__job',
 });
 
-api
-  .getUserInfoFromServer()
+api.getUserInfoFromServer()
   .then((userData) => {
     userInfo.setUserInfo(userData);
   })
@@ -102,8 +104,15 @@ api
   });
 
 const popupEdit = new PopupWithForm(".popup-edit", (formData) => {
-  userInfo.setUserInfo(formData);
-  popupEdit.close();
+  api.setUserInfoFromServer(formData)
+    .then((res) => {
+      userInfo.setUserInfo(res);
+      popupEdit.close();
+    })
+    .catch((err) => {
+    console.log(err);
+  })
+
 });
 
 buttonEdit.addEventListener("click", () => {
