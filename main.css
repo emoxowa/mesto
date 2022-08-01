@@ -41,9 +41,8 @@
 .popup_opened{display:flex;opacity:1;transition:opacity 1s,visibility 1s linear;visibility:visible}
 .popup__caption{color:#fff;font-family:Inter;font-size:12px;font-style:normal;font-weight:400;line-height:15px}
 .popup__image{max-height:70vh;max-width:70vw;-o-object-fit:contain;object-fit:contain}@media (max-width:767px){.popup__image{max-width:282px}}
-.popup__input_type_error{border-bottom-color:red}
 .popup__button_disabled{background-color:transparent;border:1px solid #000;color:#000;cursor:default;opacity:.2}
 .popup__error_visible{color:red;font-family:Inter;font-size:12px;font-style:normal;font-weight:400;line-height:15px;opacity:1}
-.popup__input_margin-bottom{margin-bottom:22px}
+.popup__input-error_margin-bottom{margin-bottom:22px}
 .popup-image{background:rgba(0,0,0,.9)}
 
