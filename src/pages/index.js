@@ -9,16 +9,22 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api";
+import PopupWithConfirmation from "../components/PopupWithConfirmation";
 
 import {
   settings,
   buttonEdit,
   buttonAdd,
+  buttonUpdateAvatar,
   nameInput,
   jobInput,
   formEdit,
   formAdd,
+  formUpdateAvatar,
 } from "../utils/constants.js";
+
+let ownerId = null;
+let currentCard = null;
 
 // Api
 const api = new Api({
@@ -32,14 +38,36 @@ const api = new Api({
 
 //Создание карточек
 
-
 function createCard(data) {
-  const card = new Card(data, "#card-template", () => {
-    popupImage.open(data);
-  });
+  const card = new Card(
+    data,
+    "#card-template",
+    () => {
+      popupImage.open(data);
+    },
+    () => {
+      currentCard = card;
+      popupDelete.open(data);
+    },
+    (isLiked, cardId) => {
+      api
+        .changeLikeStatus(isLiked, cardId)
+        .then((res) => {
+            
+            card.toggleLike(res);
+            
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    },
+    ownerId,
+  );
+
   const cardElement = card.generateCard();
   return cardElement;
 }
+
 
 const cardList = new Section(
   {
@@ -51,14 +79,6 @@ const cardList = new Section(
   ".cards"
 );
 
-api
-  .getInitialCardsFromServer()
-  .then((cardsData) => {
-    cardList.renderItems(cardsData);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
 // popupImage
 
@@ -68,17 +88,20 @@ popupImage.setEventListeners();
 // popupCreate
 
 const popupCreate = new PopupWithForm(".popup-create", (formData) => {
-  api.setCardToServer(formData)
+  popupCreate.loadingData(true);
+  api
+    .setCardToServer(formData)
     .then((res) => {
       const card = createCard(res);
       cardList.addItem(card);
       popupCreate.close();
     })
     .catch((err) => {
-    console.log(err);
-  })
-
-
+      console.log(err);
+    })
+    .finally(() => {
+      popupCreate.loadingData(false);
+    });
 })
 
 buttonAdd.addEventListener("click", () => {
@@ -91,19 +114,23 @@ popupCreate.setEventListeners();
 // userInfo / popupEdit
 
 const userInfo = new UserInfo({
-  userNameSelector: '.profile__name',
-  userJobSelector: '.profile__job',
+  userNameSelector: ".profile__name",
+  userJobSelector: ".profile__job",
+  userAvatarSelector: ".profile__avatar",
 });
 
-api.getUserInfoFromServer()
-  .then((userData) => {
+api.getUserInfoAndCardFromServer()
+  .then(([userData, cards]) => {
     userInfo.setUserInfo(userData);
+    ownerId = userData._id; // мой id
+    cardList.renderItems(cards);
   })
   .catch((err) => {
     console.log(err);
   });
 
 const popupEdit = new PopupWithForm(".popup-edit", (formData) => {
+  popupEdit.loadingData(true);
   api.setUserInfoFromServer(formData)
     .then((res) => {
       userInfo.setUserInfo(res);
@@ -111,8 +138,11 @@ const popupEdit = new PopupWithForm(".popup-edit", (formData) => {
     })
     .catch((err) => {
     console.log(err);
+    })
+    .finally(() => {
+    popupEdit.loadingData(false);
   })
-
+  
 });
 
 buttonEdit.addEventListener("click", () => {
@@ -124,6 +154,47 @@ buttonEdit.addEventListener("click", () => {
 
 popupEdit.setEventListeners();
 
+
+// popupDelete
+const popupDelete = new PopupWithConfirmation(".popup-delete", (cardId) => {
+  api
+    .deleteCardFromServer(cardId)
+    .then(() => {
+      currentCard.removeCard();
+      popupDelete.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+});
+
+popupDelete.setEventListeners();
+
+
+// popupAvatar
+
+const popupAvatar = new PopupWithForm(".popup-update-avatar", (formData) => {
+  popupAvatar.loadingData(true);
+  api
+    .changeUserAvatar(formData)
+    .then((res) => {
+      userInfo.setUserInfo(res);
+      popupAvatar.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      popupAvatar.loadingData(false);
+    });
+});
+
+popupAvatar.setEventListeners();
+
+buttonUpdateAvatar.addEventListener('click', () => {
+  popupAvatar.open();
+})
+
 // Валидация
 const validatorEdit = new FormValidator(settings, formEdit);
 validatorEdit.enableValidation();
@@ -133,4 +204,7 @@ const validatorAdd = new FormValidator(settings, formAdd);
 validatorAdd.enableValidation();
 buttonAdd.addEventListener("click", () => validatorAdd.validatePopup());
 
+const validatorUpdateAvatar = new FormValidator(settings, formUpdateAvatar);
+validatorUpdateAvatar.enableValidation();
+buttonUpdateAvatar.addEventListener('click', () => validatorUpdateAvatar.validatePopup());
 

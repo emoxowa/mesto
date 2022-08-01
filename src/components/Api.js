@@ -6,14 +6,18 @@ export default class Api {
     this._headers = options.headers;
   }
 
+  _checkAnswer(res) {
+    if (res.ok) {
+      return res.json();
+    } else {
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
+  }
+
   getUserInfoFromServer() {
     return fetch(`${this._baseUrl}/users/me`, { headers: this._headers }).then(
       (res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
+        return this._checkAnswer(res);
       }
     );
   }
@@ -27,22 +31,14 @@ export default class Api {
         about: job,
       }),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+      return this._checkAnswer(res);
     });
   }
 
   getInitialCardsFromServer() {
     return fetch(`${this._baseUrl}/cards`, { headers: this._headers }).then(
       (res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        }
+        return this._checkAnswer(res);
       }
     );
   }
@@ -56,40 +52,45 @@ export default class Api {
         link: link,
       }),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+      return this._checkAnswer(res);
     });
   }
 
-  addLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: "PUT",
-      headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-    });
-  }
-
-  removeLike() {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  deleteCardFromServer(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
+     return this._checkAnswer(res);
     });
   }
 
+  getUserInfoAndCardFromServer() {
+    return Promise.all([
+      this.getUserInfoFromServer(),
+      this.getInitialCardsFromServer(),
+    ]);
+  }
 
+  changeLikeStatus(isLiked, cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: isLiked ? "DELETE" : "PUT",
+      headers: this._headers,
+    }).then((res) => {
+      return this._checkAnswer(res);
+    });
+  }
+
+  changeUserAvatar({ avatar }) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatar,
+      }),
+    }).then((res) => {
+      return this._checkAnswer(res);
+    });
+  }
 }
 
