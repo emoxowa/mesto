@@ -73,7 +73,7 @@ const cardList = new Section(
   {
     renderer: (item) => {
       const card = createCard(item);
-      cardList.addItem(card);
+      cardList.appendItem(card);
     },
   },
   ".cards"
@@ -93,7 +93,7 @@ const popupCreate = new PopupWithForm(".popup-create", (formData) => {
     .setCardToServer(formData)
     .then((res) => {
       const card = createCard(res);
-      cardList.addItem(card);
+      cardList.prependItem(card);
       popupCreate.close();
     })
     .catch((err) => {
@@ -105,6 +105,7 @@ const popupCreate = new PopupWithForm(".popup-create", (formData) => {
 })
 
 buttonAdd.addEventListener("click", () => {
+  validatorAdd.resetValidation();
   popupCreate.open();
 });
 
@@ -149,6 +150,7 @@ buttonEdit.addEventListener("click", () => {
   const userData = userInfo.getUserInfo();
   nameInput.value = userData.name;
   jobInput.value = userData.about;
+  validatorEdit.resetValidation();
   popupEdit.open();
 });
 
@@ -192,19 +194,18 @@ const popupAvatar = new PopupWithForm(".popup-update-avatar", (formData) => {
 popupAvatar.setEventListeners();
 
 buttonUpdateAvatar.addEventListener('click', () => {
+  validatorUpdateAvatar.resetValidation();
   popupAvatar.open();
 })
 
 // Валидация
 const validatorEdit = new FormValidator(settings, formEdit);
 validatorEdit.enableValidation();
-buttonEdit.addEventListener("click", () => validatorEdit.validatePopup());
 
 const validatorAdd = new FormValidator(settings, formAdd);
 validatorAdd.enableValidation();
-buttonAdd.addEventListener("click", () => validatorAdd.validatePopup());
 
 const validatorUpdateAvatar = new FormValidator(settings, formUpdateAvatar);
 validatorUpdateAvatar.enableValidation();
-buttonUpdateAvatar.addEventListener('click', () => validatorUpdateAvatar.validatePopup());
+
 
